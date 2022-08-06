@@ -14,8 +14,9 @@ const model = {
     id : "",
     tittle : "",
     description : "",
-    projectMangersID : "",
-    projectStatus : "Inactive",
+    projectMangersID : [],
+    projectsMembersID : [],
+    projectStatus : "Active",
     duration : ""
 };
 

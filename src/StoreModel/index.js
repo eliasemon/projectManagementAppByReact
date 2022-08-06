@@ -1,18 +1,25 @@
 import { action } from "easy-peasy";
 /*
 ProjectsItemModel = {
-    id : "",
+    id : "project||ID-uuidv4||tittle",
     tittle : "",
     description : "",
-    projectMangersID : "",
+    projectMangersID : [],
+    projectsMembersID : [],
     projectStatus : "",
     duration : ""
 };*/
 /*  MemberItemModel = {
-    id : "",
+    id : "member||ID-uuidV4||name",
     name : "",
-    assignTasksId : [],
-    WorkingOnProjectsId : []
+    email : "",
+    address : "",
+    assignedTasksId : [],
+    compleatedTasksId : [],
+    unabledToCompletedTaskId : [],
+    runningProjectID : [],
+    rejectedOrCanceledProjectid : {},
+    completedProjectsId : []
 
 }*/
 const model = {
@@ -28,6 +35,8 @@ const model = {
             }
         }
     },
+    RunningProjectIds : ["1"],
+    PostponeProjectIds : [],
     Tasks : {},
     MemberList: {},
     //Actions
@@ -37,10 +46,22 @@ const model = {
     }),
     //Projects Section
     addProject : action((state , projectItem)=>{
+        const {RunningProjectIds} = state
         state.Projects[projectItem.id] = projectItem;
+        RunningProjectIds.unshift(projectItem.id)
     }),
     postponeProject : action((state , itemkey)=>{
-     state.Projects[itemkey].projectStatus = "postpone"
+        const {PostponeProjectIds , RunningProjectIds} = state
+        state.Projects[itemkey].projectStatus = "postpone"
+        PostponeProjectIds.unshift(itemkey)
+        state.RunningProjectIds = RunningProjectIds.filter(v => v != itemkey)
+        
+    }),
+    activateProject : action((state , itemkey)=>{
+        const {PostponeProjectIds , RunningProjectIds} = state
+        state.PostponeProjectIds = PostponeProjectIds.filter(v => v != itemkey)
+        RunningProjectIds.unshift(itemkey)
+        state.Projects[itemkey].projectStatus = "Active"
     })
     
 }

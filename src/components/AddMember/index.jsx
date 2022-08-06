@@ -12,8 +12,14 @@ import { useStoreActions} from "easy-peasy";
 const model = {
     id : "",
     name : "",
-    assignTasksId : [],
-    WorkingOnProjectsId : []
+    email : "",
+    address : "",
+    assignedTasksId : [],
+    compleatedTasksId : [],
+    unabledToCompletedTaskId : [],
+    runningProjectID : [],
+    rejectedOrCanceledProjectid : {},
+    completedProjectsId : []
 
 }
 const AddMember = ( { setOpen , open }) => {

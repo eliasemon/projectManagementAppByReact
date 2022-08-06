@@ -1,3 +1,4 @@
+import {Link } from 'react-router-dom';
 import { useState } from 'react'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,16 +16,10 @@ const  Navbar = ()=> {
     const handleProjectOpen = () => {
         setProjectOpen(true);
     };
-    const handleProjectClose = () => {
-        setProjectOpen(false);
-    };
     //Add Member Sections
     
     const handleMemberOpen = () => {
         setMemberOpen(true);
-    };
-    const handleMemberClose = () => {
-        setMemberOpen(false);
     };
     return (
     <>
@@ -33,8 +28,17 @@ const  Navbar = ()=> {
                 <Container>
                     <Toolbar>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                            Home
+                            <Link to="/">
+                                Home
+                            </Link>
                         </Typography>
+                        
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                            <Link to="/PostponeProject">
+                                PostponeProjects
+                            </Link>
+                        </Typography>
+
                         <Stack spacing ={2} direction="row">
                         <Button variant="contained" sx={{border:"1px solid white"}} onClick={handleMemberOpen}>Add Member</Button>
                             <Button variant="contained" sx={{border:"1px solid white"}} onClick={handleProjectOpen}>Add Project</Button>

@@ -16,11 +16,11 @@ ProjectsItemModel = {
     projectStatus : "",
     duration : ""
 };*/
-const ProjectsItemCard = ({item}) => {
-    const {postponeProject} = useStoreActions(action => action)
-    const postponeHanader = () =>{
-        postponeProject(item.id)
-    }
+const ProjectsItemCard = ({item, type}) => {
+    const {postponeProject , activateProject} = useStoreActions(action => action)
+    const openLink = (type == "active" ? `/viewProject/${item.id}` :`../viewProject/${item.id}`)
+    const acOrPp =  (type == "active" ? <Button size="small" onClick={()=>postponeProject(item.id)}>Postpone The Project</Button> :<Button size="small" onClick={()=>activateProject(item.id)}>Activate This Project</Button>)
+
     return (
         <Card sx={{ maxWidth: 345, m: 2, border: "1px solid black" }}>
             <div style = {{cursor : "pointer"}}>
@@ -46,10 +46,10 @@ const ProjectsItemCard = ({item}) => {
             </CardContent>
             </div>
             <CardActions>
-                <Link to= {`viewProject/${item.id}`}>
+                <Link to= {openLink}>
                     <Button size="small">Open</Button>
                 </Link>
-                <Button size="small" onClick={postponeHanader}> Postpone The Project </Button>
+                {acOrPp}
             </CardActions>
         </Card>
     );
