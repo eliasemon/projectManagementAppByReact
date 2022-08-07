@@ -7,29 +7,37 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useStoreActions , useStoreState  } from "easy-peasy";
+import { useStoreActions, useStoreState} from "easy-peasy";
+import Typography from '@mui/material/Typography';
+import SearchBox from '../SearchBox/index';
 
-// dataModel
 const model = {
     id : "",
     tittle : "",
-    description : "",
-    projectMangersID : [],
-    projectsMembersID : [],
-    projectStatus : "Active",
-    allTaskIds :[],
-    activeTaskListIds : [],
-    compleatedTaskListIds : [],
-    postPoneTasklistIds : [],
-    duration : ""
-};
-
-const AddProject = ( { setOpen , open}) => {
-    const {addProject} = useStoreActions(actions => actions);
+    elements : [],
+    status : "active",
+    //Todo::
+    //Status can be changed by Project Manager. 
+    statusSubmitionFromProjectManagerSite : "",
+    statusSubmitionFromMemberSite : "",
+    //Todo::
+    //If Member chage the status ,it will notify project manager
+    deadLine : "",
+    assignedToMembersIds : [],
+    projectId : "",
+    subTaskIds : [],
+    /*One problem is appeared that is := If the parent task's status 
+    if compleated ,all of it's sub task's status might be compleated,
+    here we need tree traversal by recursive call. 
+    */
+}
+const AddTask = ( { setOpen , open, projectId }) => {
+    const {MemberList : storeMemberList } = useStoreState(state =>state)
+    const {addTaskToStore} = useStoreActions(actions => actions);
     const [state, setState] = useState(model)
 
     useEffect(()=>{
-        const id = `Project||ID-${uuidv4()}`
+        const id = `Task||ID-${uuidv4()}`
         setState((prev) =>{
             prev.id = id;
             return {
@@ -37,6 +45,10 @@ const AddProject = ( { setOpen , open}) => {
             }
         })
     },[open])
+    const handleClose = () => {
+        setState(model);
+        setOpen(false)
+    }
     const tittleChange =(e)=>{
         setState((prev) =>{
             prev.tittle = e.target.value;
@@ -45,37 +57,25 @@ const AddProject = ( { setOpen , open}) => {
             }
         })
     }
-    const descriptionChange = (e) =>{
+    const deadLineChange =(e)=>{
         setState((prev) =>{
-            prev.description = e.target.value;
+            prev.deadLine = e.target.value;
             return {
                 ...prev,
             }
         })
-    }
-    const durationChange = (e) =>{
-        setState((prev) =>{
-            prev.duration = e.target.value;
-            return {
-                ...prev,
-            }
-        })
-    }
-
-    
-    //Todo:
-    // project manager will be pickUp in memberList
-    const handleClose = () => {
-        setState(model);
-        setOpen(false)
     }
     const submitHandeler = ()=>{
         state.id += `||${state.tittle}`
-        addProject(state);
+        state.projectId = projectId;
+        addTaskToStore(state);
         handleClose();
     }
     const cancleHandeler = ()=>{
         handleClose();
+    }
+    const matchStateLiftingFn = (liftedState)=>{
+        state.assignedToMembersIds = liftedState;
     }
     return (
         <div>
@@ -93,7 +93,7 @@ const AddProject = ( { setOpen , open}) => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        value = {state.id+`||${state.tittle}`}
+                        value = {state.id +`||${state.tittle}`}
                     />
                     <TextField
                         autoFocus
@@ -106,33 +106,27 @@ const AddProject = ( { setOpen , open}) => {
                         value = {state.tittle}
                         onChange={tittleChange}
                     />
-                     <TextField
-                        margin="dense"
-                        id="description"
-                        label="DescripTion"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value = {state.description}
-                        onChange={descriptionChange}
-                    />
                     <TextField
                         margin="dense"
-                        id="duration"
-                        label="Duration (Per Unit = Month)"
+                        id="deadLine"
+                        label="Dead Line"
                         type="number"
                         fullWidth
                         variant="standard"
-                        value = {state.duration}
-                        onChange={durationChange}
+                        value = {state.deadLine}
+                        onChange={deadLineChange}
                     />
+                    <Typography variant="h5" component="div">
+                        Assign To Members
+                    </Typography>
+                   <SearchBox matchStateLiftingFn={matchStateLiftingFn} keysArray={Object.keys(storeMemberList)} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={cancleHandeler}>Cancel</Button>
-                    <Button onClick={submitHandeler}>Add Project</Button>
+                    <Button onClick={submitHandeler}>Add Task</Button>
                 </DialogActions>
             </Dialog>
         </div>
     );
 }
-export default  AddProject
+export default  AddTask

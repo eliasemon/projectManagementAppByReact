@@ -71,7 +71,7 @@ const AddMember = ( { setOpen , open }) => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        value = {state.id}
+                        value = {state.id+`||${state.name}`}
                     />
                     <TextField
                         autoFocus

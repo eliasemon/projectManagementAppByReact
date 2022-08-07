@@ -1,12 +1,16 @@
 import { action } from "easy-peasy";
 /*
 ProjectsItemModel = {
-    id : "project||ID-uuidv4||tittle",
+    id : "",
     tittle : "",
     description : "",
     projectMangersID : [],
     projectsMembersID : [],
-    projectStatus : "",
+    projectStatus : "Active",
+    allTaskIds :[],
+    activeTaskListIds : [],
+    compleatedTaskListIds : [],
+    postPoneTasklistIds : [],
     duration : ""
 };*/
 /*  MemberItemModel = {
@@ -22,6 +26,28 @@ ProjectsItemModel = {
     completedProjectsId : []
 
 }*/
+/*
+EachTaskModel = {
+    id : "",
+    tittle : "",
+    elements : [],
+    status : "active",
+                //Todo::
+                //Status can be changed by Project Manager. 
+    statusSubmitionFromProjectManagerSite : "",
+    statusSubmitionFromMemberSite : "",
+            //Todo::
+            //If Member chage the status ,it will notify project manager
+    deadLine : "",
+    assignedToMembersIds : [],
+    projectId : "",
+    subTaskIds : [],
+            [One problem is appeared that is := If the parent task's status 
+            if compleated ,all of it's sub task's status might be compleated,
+            here we need tree traversal by recursive call.] 
+
+}
+*/
 const model = {
     //Store
     Projects : {
