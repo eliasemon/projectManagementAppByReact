@@ -9,6 +9,8 @@ import {useStoreState  } from "easy-peasy";
 
 const App = ()=>{ 
   const {Projects,RunningProjectIds, PostponeProjectIds} = useStoreState(state => state)
+  const state = useStoreState(state => state)
+  console.log(state)
   return (
     <>
     

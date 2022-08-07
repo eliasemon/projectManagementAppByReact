@@ -30,9 +30,9 @@ const SearchBox = ({ keysArray, defualtSelectedArray = [], matchStateLiftingFn }
         })
         if(!flag){
             setSelectedkeysArray(prev => [...prev, id] )
-            matchStateLiftingFn(selectedkeysArray)
         }
     }
+    matchStateLiftingFn(selectedkeysArray)
     return (
         <>
             <h5>Selected Individuals</h5>

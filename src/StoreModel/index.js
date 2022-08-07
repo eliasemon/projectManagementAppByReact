@@ -50,46 +50,58 @@ EachTaskModel = {
 */
 const model = {
     //Store
-    Projects : {
-        "1" : {
-            id : "1",
-            tittle : "Web-development",
-            description : "Creating full-face Applications",
-            projectManager : {
-                MemberId : "001",
-                Name : ""
-            }
+    Projects: {
+        "1": {
+            id: "1",
+            tittle: "Web Devolopment",
+            description: "Create Full face application",
+            projectMangersID: [],
+            projectsMembersID: [],
+            projectStatus: "Active",
+            allTaskIds: [],
+            activeTaskListIds: [],
+            compleatedTaskListIds: [],
+            postPoneTasklistIds: [],
+            duration: "20"
         }
     },
-    RunningProjectIds : ["1"],
-    PostponeProjectIds : [],
-    Tasks : {},
+    RunningProjectIds: ["1"],
+    PostponeProjectIds: [],
+    Tasks: {},
     MemberList: {},
     //Actions
     // membersSection
-    addmember : action((state , member)=>{
+    addmember: action((state, member) => {
         state.MemberList[member.id] = member;
     }),
     //Projects Section
-    addProject : action((state , projectItem)=>{
-        const {RunningProjectIds} = state
+    addProject: action((state, projectItem) => {
+        const { RunningProjectIds } = state
         state.Projects[projectItem.id] = projectItem;
         RunningProjectIds.unshift(projectItem.id)
     }),
-    postponeProject : action((state , itemkey)=>{
-        const {PostponeProjectIds , RunningProjectIds} = state
+    postponeProject: action((state, itemkey) => {
+        const { PostponeProjectIds, RunningProjectIds } = state
         state.Projects[itemkey].projectStatus = "postpone"
         PostponeProjectIds.unshift(itemkey)
         state.RunningProjectIds = RunningProjectIds.filter(v => v != itemkey)
-        
+
     }),
-    activateProject : action((state , itemkey)=>{
-        const {PostponeProjectIds , RunningProjectIds} = state
+    activateProject: action((state, itemkey) => {
+        const { PostponeProjectIds, RunningProjectIds } = state
         state.PostponeProjectIds = PostponeProjectIds.filter(v => v != itemkey)
         RunningProjectIds.unshift(itemkey)
         state.Projects[itemkey].projectStatus = "Active"
+    }),
+    //Task section
+    addTaskToStore: action((state, taskItem) => {
+        state.Tasks[taskItem.id] = taskItem;
+
+        state.Projects[taskItem.projectId].allTaskIds = [...state.Projects[taskItem.projectId].allTaskIds, taskItem.id];
+
+        state.Projects[taskItem.projectId].activeTaskListIds = [...state.Projects[taskItem.projectId].activeTaskListIds, taskItem.id];
     })
-    
+
 }
 
 export default model

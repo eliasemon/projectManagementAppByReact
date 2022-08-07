@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import AddTask from '../AddTask/index';
+import TaskLoader from '../TaskLoader';
 
 const ViewProject = ()=>{
     const {pId} = useParams();
@@ -41,6 +42,7 @@ const ViewProject = ()=>{
                     </Typography>
                 </Box>
                 <Button variant="contained" sx={{border:"1px solid white"}} onClick={handleAddTaskOpen}>Add Task</Button>
+                <TaskLoader Tasks = {Tasks} idsArray = {onFocusedProject.allTaskIds} />
             </Container>
             <AddTask projectId = {pId} setOpen = {setAddTaskOpen} open={addTaskOpen} />
         </Box>
