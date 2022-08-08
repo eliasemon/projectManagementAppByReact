@@ -11,7 +11,8 @@ ProjectsItemModel = {
     activeTaskListIds : [],
     compleatedTaskListIds : [],
     postPoneTasklistIds : [],
-    duration : ""
+    duration : "",
+    isImportant : false
 };*/
 /*  MemberItemModel = {
     id : "member||ID-uuidV4||name",
@@ -94,12 +95,21 @@ const model = {
         state.Projects[itemkey].projectStatus = "Active"
     }),
     //Task section
-    addTaskToStore: action((state, taskItem) => {
-        state.Tasks[taskItem.id] = taskItem;
+    addTaskToStore: action((state, payload) => {
+        const {type , taskItem , mainTaskId} = payload
+        if (type == "mainTask") {
+            state.Tasks[taskItem.id] = taskItem;
 
-        state.Projects[taskItem.projectId].allTaskIds = [...state.Projects[taskItem.projectId].allTaskIds, taskItem.id];
+            state.Projects[taskItem.projectId].allTaskIds = [...state.Projects[taskItem.projectId].allTaskIds, taskItem.id];
 
-        state.Projects[taskItem.projectId].activeTaskListIds = [...state.Projects[taskItem.projectId].activeTaskListIds, taskItem.id];
+            state.Projects[taskItem.projectId].activeTaskListIds = [...state.Projects[taskItem.projectId].activeTaskListIds, taskItem.id];
+        }else{
+            state.Tasks[taskItem.id] = taskItem;
+            state.Tasks[mainTaskId].subTaskIds.unshift(taskItem.id)
+        }
+    }),
+    TaskStatusChanger  : action((state , taskId)=>{
+        state.Tasks[taskId].status = (state.Tasks[taskId].status) == "active" ? "compleated" : "active";
     })
 
 }

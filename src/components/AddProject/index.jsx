@@ -21,7 +21,8 @@ const model = {
     activeTaskListIds : [],
     compleatedTaskListIds : [],
     postPoneTasklistIds : [],
-    duration : ""
+    duration : "",
+    isImportant : false
 };
 
 const AddProject = ( { setOpen , open}) => {

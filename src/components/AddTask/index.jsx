@@ -31,7 +31,7 @@ const model = {
     here we need tree traversal by recursive call. 
     */
 }
-const AddTask = ( { setOpen , open, projectId }) => {
+const AddTask = ( { setOpen , open, projectId ,type ,mainTaskId}) => {
     const {MemberList : storeMemberList } = useStoreState(state =>state)
     const {addTaskToStore} = useStoreActions(actions => actions);
     const [state, setState] = useState(model)
@@ -68,7 +68,7 @@ const AddTask = ( { setOpen , open, projectId }) => {
     const submitHandeler = ()=>{
         state.id += `||${state.tittle}`
         state.projectId = projectId;
-        addTaskToStore(state);
+        addTaskToStore({type, taskItem : state,mainTaskId});
         handleClose();
     }
     const cancleHandeler = ()=>{

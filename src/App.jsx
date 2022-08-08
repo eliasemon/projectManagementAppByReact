@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/index';
 import ProjectscardLoader from './components/ProjectsCardLoader/index';
 import ViewProject from './components/ViewProject/index';
 import {useStoreState  } from "easy-peasy";
+import ViewTask from './components/ViewTask/index';
 
 
 
@@ -13,12 +14,12 @@ const App = ()=>{
   console.log(state)
   return (
     <>
-    
       <CssBaseline />
         <Navbar />
         <Routes>
           <Route path="/" element={<ProjectscardLoader type = "active" Projects = {Projects}  idsArray = {RunningProjectIds}  />} />
           <Route path="viewProject/:pId" element={<ViewProject />} />
+          <Route path="viewTask/:tId" element={<ViewTask />} />
           <Route path="PostponeProject" element={<ProjectscardLoader type = "postpone" Projects = {Projects} idsArray = {PostponeProjectIds}/>} />
         </Routes>
     </>

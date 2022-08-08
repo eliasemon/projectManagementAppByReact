@@ -22,6 +22,9 @@ const ViewProject = ()=>{
     return (
         <Box sx={{ width: '100%',mt : 11 }}>
             <Container maxWidth="lg">
+            <Typography variant="h5" component="div" gutterBottom>
+                        Viewing Project---  
+            </Typography>
                 <CardMedia
                     component="img"
                     height="180"
@@ -44,7 +47,7 @@ const ViewProject = ()=>{
                 <Button variant="contained" sx={{border:"1px solid white"}} onClick={handleAddTaskOpen}>Add Task</Button>
                 <TaskLoader Tasks = {Tasks} idsArray = {onFocusedProject.allTaskIds} />
             </Container>
-            <AddTask projectId = {pId} setOpen = {setAddTaskOpen} open={addTaskOpen} />
+            <AddTask type = "mainTask" projectId = {pId} setOpen = {setAddTaskOpen} open={addTaskOpen} />
         </Box>
     )
 }

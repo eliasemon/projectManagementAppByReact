@@ -5,7 +5,8 @@ const ProjectscardLoader = ({Projects , idsArray ,type}) =>{
     return(
     <>
         <Container>
-            <Stack direction="row" sx={{flexWrap : "wrap",mt : 8}} >
+            <h3 style={{marginTop : "100px"}}>Projects Loader</h3>
+            <Stack direction="row" sx={{flexWrap : "wrap",mt : 2}} >
                 {idsArray.map(itkey => <ProjectsItemCard type = {type} item = {Projects[itkey]} key = {itkey}/>
                 )}
             </Stack>
